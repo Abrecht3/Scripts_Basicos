@@ -1,35 +1,22 @@
+##se limpia la consola, se carga el paquete image para usar sus funciones
+## y finalmente se cierran todas las que pudieran seguir abiertas
 clear;
 pkg load image;
 close all;
-%%Ejemplo de binarizar una imagen
-im=imread('prueba.jpg');
 
-%%Mostrar en una ventana una imagen
-figure(1); 
-subplot(2,3,1); imshow(im); title('imagen original');
+%%Script para convertir una imagen a su forma binaria 
+##y guardar como un nuevo archivo
 
-%%Definir el nivel de gris para binarizar--> 
-nivel = graythresh(im); %umbral de nivel de gris
+##Se lee la imagen original con la funcio imread
+im1=imread('37895380_316469305763589_2637650033356308480_n.jpg');
 
-%%Binarizar una imagen --> 
-bw2=im2bw(im,nivel);
-subplot(2,3,2); imshow(bw2); title('imagen binarizada');
+##im2bw es la funcion que convierte a una matriz binaria 
+BW = im2bw(im1);
 
-%%Definir un elemento estructurante --> 
-se = strel('diamond', 2); %elemento estructurante
-
-%%Operación dilatación --> 
-im3 = imdilate(bw2,se);
-subplot(2,3,3); imshow(im3); title('dilatación');
-
-%%Operación cerradura --> 
-im4=imclose(im3,se);  
-subplot(2,3,4); imshow(im4); title('cerradura');
-
-%%Operación XOR --> 
-im5=bitxor(im4,bw2);
-subplot(2,3,5); imshow(im5); title('operacion XOR');
-
-%%Operación inversión --> 
-im6=1-im5;
-subplot(2,3,6); imshow(im6); title('Operacion Inversion');
+##se guarda en un nuevo archivo con imwrite 
+imwrite(BW, 'final_b.jpg');
+ 
+##Se muestra la imagen en una ventana con imshow
+##figure permite abrir varias ventanas 
+figure 1, imshow(im1);
+figure 2, imshow(BW);
